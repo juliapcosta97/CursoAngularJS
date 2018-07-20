@@ -41,7 +41,8 @@
 				<td>{{aluno.nota2}}</td>
 				<td>{{aluno.nota3}}</td>
 				<td>{{aluno.media}}</td>
-				<td><button class="btn blue" ng-click="editarAluno(aluno)">Editar</button></td>
+				<td><button class="btn blue" ng-click="editarAluno(aluno)">Editar</button>
+				<button class="btn red" ng-click="deletarAluno(aluno)">Deletar</button></td>
 			</tr>
 		</tbody>
 	</table>
@@ -172,6 +173,15 @@
 			$('#modal1').closeModal();
 		};
 		
+		$scope.deletarAluno = function(Aluno){
+			for(index in $scope.alunos){
+				var aux = $scope.alunos[index];
+				if(Aluno === aux){
+					//splice deleta elementos de uma lista
+					$scope.alunos.splice(index,1);
+				}
+			}
+		}
 
 		$scope.addAluno = function(Aluno){
 			Aluno.media = media(Aluno);
