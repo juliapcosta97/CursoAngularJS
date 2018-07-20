@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html ng-app="meuModulo">
 <head>
-	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
 	<meta charset="utf-8">
-	 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>Angular JS</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
 </head>
-
 <body ng-controller="indexController">
-<header class="container">
+<header class="container">	
 	<!-- ng-bind="titulo" exibe o conteudo da variavel titulo -->
-	<h2 ng-bind="titulo"></h2>	
+	<h2 ng-bind="titulo"></h2>
 </header>
 <main class="container">
 	<div class="row">
-		<!-- busca.nome filtra apenas pela coluna de nomes -->
-		<input type="text" placeholder="Busca" ng-model="busca">
+		<!-- busca.email filtra apenas pela coluna de email -->
+		<input type="text" ng-model="busca.email" placeholder="Busca">
 
 	</div>
 	<table class="striped">
 		<thead>
 			<tr>
-				<th>Nome </th>
-				<th>E-mail </th>
-				<th>Nota1 </th>
-				<th>Nota2 </th>
-				<th>Nota3 </th>
-				<th>Média </th>
+				<th>Nome</th>
+				<th>E-mail</th>
+				<th>Nota1</th>
+				<th>Nota2</th>
+				<th>Nota3</th>
+				<th>Média</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -35,37 +34,69 @@
 			<tr ng-repeat="aluno in alunos | filter:busca">
 				<td>{{aluno.nome}}</td>
 				<td>{{aluno.email}}</td>
-				<td>{{aluno.nota01}}</td>
-				<td>{{aluno.nota02}}</td>
-				<td>{{aluno.nota03}}</td>
+				<td>{{aluno.nota1}}</td>
+				<td>{{aluno.nota2}}</td>
+				<td>{{aluno.nota3}}</td>
 				<td>{{aluno.media}}</td>
 			</tr>
 		</tbody>
 	</table>
-
+	<div class="row">
+		<!-- Modal Trigger abre uma tela-->
+  		<a class="modal-trigger waves-effect waves-light btn" href="#modal1">Adicionar</a>
+	</div>
 </main>
 
- <!-- Modal Trigger -->
-  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-
+  
   <!-- Modal Structure -->
-  <div id="modal1" class="modal">
+  <div id="modal1" class="modal modal-fixed-footer">
     <div class="modal-content">
-      <h4>Modal Header</h4>
-      <p>A bunch of text</p>
+      <h4>Adicionar Aluno</h4>
+      <p>Preencha os dados do Aluno</p>
+      <div class="row">
+      	<!-- m6 desktop s12 mobile definem espaço ocupado nas telas-->
+      	<!-- Input é o campo de entrada de dados -->
+      	<div class="input-field col m6 s12">
+      		<!-- ng-model="Aluno.nome" cria um objeto Aluno com o atributo nome -->
+          <input type="text" ng-model="Aluno.nome" class="validate">
+          <label>Nome</label>
+        </div>
+        
+        <div class="input-field col m6 s12">
+          <input type="text" ng-model="Aluno.email" class="validate">
+          <label>E-mail</label>
+        </div>
+        <div class="input-field col m4 s12">
+          <input type="text" ng-model="Aluno.nota1" class="validate">
+          <label>Nota1</label>
+        </div>
+        <div class="input-field col m4 s12">
+          <input type="text" ng-model="Aluno.nota2" class="validate">
+          <label>Nota2</label>
+        </div>
+        <div class="input-field col m4 s12">
+          <input type="text" ng-model="Aluno.nota3" class="validate">
+          <label>Nota3</label>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    	<!-- ng-click="addAluno(Aluno)" que chama o método que add dados no clique do botão-->
+    	<a ng-click="addAluno(Aluno)" class="waves-effect waves-light btn blue">Adicionar</a>
+    	<!-- modal-close encerra a tela de mogal-->
+      	<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancelar</a>
+
     </div>
   </div>
 
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
 <script src="lib/angular/angular.min.js"></script>
 
 <script type="text/javascript">
-
-   $(document).ready(function(){	    
+	//Inicialização do sistema de Modal
+	 $(document).ready(function(){	    
 	    $('.modal-trigger').leanModal();
 	  });
 
@@ -74,51 +105,48 @@
 <script type="text/javascript">
 	angular.module("meuModulo",[])
 	.controller("indexController",function($scope){
-		//$scope serve como uma ponte entre a view e o controller
 		$scope.titulo = "Sistema com Angular JS";
-
-		//Lista de alunos
 		$scope.alunos = [
-			{nome: "Camila",email: "camila@gmail.com",nota01:03,nota02:05,nota03:10},
-			{nome: "João",email: "joao@gmail.com",nota01:10,nota02:30,nota03:10},
-			{nome: "Julia",email: "julia@gmail.com",nota01:25,nota02:50,nota03:40},
-			{nome: "José",email: "jose@gmail.com",nota01:60,nota02:70,nota03:80},
-			{nome: "Lucas",email: "lucas@gmail.com",nota01:100,nota02:99,nota03:200},
-		]
+			{nome: "Camila",email:"camila@mail.com",nota1:65,nota2:80,nota3:55},
+			{nome: "Pedro",email:"pedro@mail.com",nota1:75,nota2:80,nota3:55},
+			{nome: "Murilo",email:"murilo@mail.com",nota1:65,nota2:60,nota3:55},
+			{nome: "João",email:"joao@mail.com",nota1:95,nota2:80,nota3:55},
+			{nome: "Ana",email:"ana@mail.com",nota1:65,nota2:30,nota3:55}
+		];
 
 		//executa uma função na inicialização da página
-		var ini = function(){
+		var init = function(){
 			$scope.alunos.forEach(function(aluno){
 				aluno.media = media(aluno);
 			});
 		};
-
-		var contar = 0;
-		var media = function(Aluno){			
+		var contar2 = 0;
+		var media = function(Aluno){
 			//exibe no console do navegador toda vez q funcao é chamada
-			//Console.log(contar++);
-
-			var media = (Aluno.nota01 + Aluno.nota02 + Aluno.nota03)/3;
-
+			console.log(contar2++);
+			//parseFloat converte os valores para número (float)
+			var media = (parseFloat(Aluno.nota1) + parseFloat(Aluno.nota2) + parseFloat(Aluno.nota3))/3;
 			//toFixed(2) exibe o número com só 2 casas depois da virgula
 			return media.toFixed(2);
 		};
 
-		ini();
+		
 
-		/*var contar = 0;
-		$scope.media = function(Aluno){
-			//exibe no console do navegador toda vez q funcao é chamada
-			Console.log(contar++);
+		$scope.addAluno = function(Aluno){
+			Aluno.media = media(Aluno);
+			//adc objeto aluno na lista de alunos
+			$scope.alunos.push(Aluno);
+			//Fecha o método modal
+			$('#modal1').closeModal();
+			//limpa os dados do formulario
+			$scope.Aluno = {nome: "",email:"",nota1:'',nota2:'',nota3:'',media:''};
+		};
 
-			var media = (Aluno.nota01 + Aluno.nota02 + Aluno.nota03)/3;
+		init();
 
-			//toFixed(2) exibe o número com só 2 casas depois da virgula
-			return media.toFixed(2);
-		};*/
+
 	})
 
 </script>
 </body>
-</html>
 </html>
