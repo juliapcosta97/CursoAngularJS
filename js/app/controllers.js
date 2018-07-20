@@ -1,13 +1,13 @@
 angular.module("meuModulo")
 	.controller("indexController",function($scope){
-		$scope.titulo = "Sistema com Angular JS";
+		$scope.titulo = "Home";
 		$scope.alunos = [
 			{nome: "Camila",email:"camila@mail.com",nota1:65,nota2:80,nota3:55},
 			{nome: "Pedro",email:"pedro@mail.com",nota1:75,nota2:80,nota3:55},
 			{nome: "Murilo",email:"murilo@mail.com",nota1:65,nota2:60,nota3:55},
 			{nome: "João",email:"joao@mail.com",nota1:95,nota2:80,nota3:55},
 			{nome: "Ana",email:"ana@mail.com",nota1:65,nota2:30,nota3:55}
-		];
+		];	
 
 	
 
@@ -84,4 +84,8 @@ angular.module("meuModulo")
 
 		init();
 
+	})
+
+	.controller("contatoController",function($scope){
+		$scope.titulo = "Contato";
 	})
